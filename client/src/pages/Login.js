@@ -1,12 +1,15 @@
-import React, {useState} from 'react'
-import gql from 'graphql-tag'
+import React, {useContext,useState} from 'react'
 import {useMutation} from '@apollo/react-hooks'
+import {AuthContext} from '../context/auth'
 
 import {Grid,Form, Button} from 'semantic-ui-react'
 
 import {useForm} from '../utils/hooks'
+import {LOGIN_USER} from '../utils/GraphqlQueries'
 
 function Login(props) {
+
+    const context = useContext(AuthContext)
 
     // TODO: setup errors
     const [errors, setErrors] = useState({})
@@ -18,9 +21,10 @@ function Login(props) {
 
 
     const [loginUser, {loading}] = useMutation(LOGIN_USER, {
-        update(_,result) {
+        update(_,{data:{login: userData} = {}}) {
+            context.login(userData)
             props.history.push('/')
-
+            console.log(userData)
         },
         onError(err) {
             // setErrors(err.graphQLErrors[0].extensions.exception.errors)
@@ -38,7 +42,7 @@ function Login(props) {
     return (
         <Grid centered columns={2}>
             <Grid.Row>
-                <h2 className="ui center aligned container">Register a new user</h2>
+                <h2 className="ui center aligned container">User Login</h2>
             </Grid.Row>
             <Grid.Column>
                 <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
@@ -81,18 +85,5 @@ function Login(props) {
     )
 }
 
-const LOGIN_USER = gql`
-    mutation login(
-        $username: String!
-        $password: String!
-    ){
-        login(
-            username: $username
-            password: $password
-        ){
-            id username email createdAt token
-        }
-    }
-`
 
 export default Login;

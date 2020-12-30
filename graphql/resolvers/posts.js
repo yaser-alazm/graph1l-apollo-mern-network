@@ -20,7 +20,7 @@ module.exports = {
 
             try{
                 const post = await Post.findById(postID)
-                console.log(post)
+                // console.log(post)
                 if(post){
                     return post
                 }else {
@@ -59,7 +59,7 @@ module.exports = {
         deletePost: async (_, {postId}, context) => {
             const user = checkAuthUser(context)
 
-            const delPost = await Post.findOne({id: postId})
+            const delPost = await Post.findById(postId)
 
             try{
                 if(user.username === delPost.username){
@@ -68,6 +68,7 @@ module.exports = {
                 }else {
                     throw new AuthenticationError('You don\'t have the permission to delete this post!')
                 }
+                // return delPost
 
             }catch (err) {
                 throw new Error(err)

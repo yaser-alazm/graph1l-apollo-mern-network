@@ -5,8 +5,10 @@ import {ApolloClient} from '@apollo/client';
 import { ApolloProvider,createHttpLink, InMemoryCache } from '@apollo/react-hooks';
 import {setContext} from 'apollo-link-context'
 
+// for development, uri was 'http://localhost:5000'
+// changed to server URL on Heroku for production
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000'
+  uri: 'https://graphql-apollo-mern-network.herokuapp.com/'
 });
 
 const authLink = setContext(() => {

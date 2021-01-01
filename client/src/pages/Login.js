@@ -1,4 +1,4 @@
-import React, {useContext,useState} from 'react'
+import React, {useContext} from 'react'
 import {useMutation} from '@apollo/react-hooks'
 import {AuthContext} from '../context/auth'
 
@@ -12,7 +12,7 @@ function Login(props) {
     const context = useContext(AuthContext)
 
     // TODO: setup errors
-    const [errors, setErrors] = useState({})
+    // const [errors, setErrors] = useState({})
 
     const {values, onChange,onSubmit} = useForm(loginUserCallback, {
         username: '',
@@ -24,7 +24,7 @@ function Login(props) {
         update(_,{data:{login: userData} = {}}) {
             context.login(userData)
             props.history.push('/')
-            console.log(userData)
+            // console.log(userData)
         },
         onError(err) {
             // setErrors(err.graphQLErrors[0].extensions.exception.errors)
@@ -70,7 +70,7 @@ function Login(props) {
                     />
                 </Form>
 
-                {Object.keys(errors).length > 0 && (
+                {/* {Object.keys(errors).length > 0 && (
                     <div className="ui message error">
                         <ul className="list">
                             {Object.values(errors).map(error => (
@@ -79,7 +79,7 @@ function Login(props) {
                             )}
                         </ul>
                     </div>
-                )}
+                )} */}
             </Grid.Column>
         </Grid>
     )

@@ -1,4 +1,4 @@
-import React, {useContext,useState} from 'react'
+import React, {useContext} from 'react'
 import {useMutation} from '@apollo/react-hooks'
 import {AuthContext} from '../context/auth'
 
@@ -12,7 +12,7 @@ function Register(props) {
     const context = useContext(AuthContext)
 
     // TODO: setup errors
-    const [errors, setErrors] = useState({})
+    // const [errors, setErrors] = useState({})
 
     const {values, onChange,onSubmit} = useForm(addUserCallback, {
         username: '',
@@ -26,7 +26,7 @@ function Register(props) {
         update(_,{data: {register: userData}} = {}) {
             context.login(userData)
             props.history.push('/')
-            console.log(userData)
+            // console.log(userData)
         },
         onError(err) {
             // setErrors(err.graphQLErrors[0].extensions.exception.errors)
@@ -90,7 +90,7 @@ function Register(props) {
                     />
                 </Form>
 
-                {Object.keys(errors).length > 0 && (
+                {/* {Object.keys(errors).length > 0 && (
                     <div className="ui message error">
                         <ul className="list">
                             {Object.values(errors).map(error => (
@@ -99,7 +99,7 @@ function Register(props) {
                             )}
                         </ul>
                     </div>
-                )}
+                )} */}
             </Grid.Column>
         </Grid>
     )
